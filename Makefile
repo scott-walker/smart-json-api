@@ -36,13 +36,20 @@ build-api:
 		-f $(PWD)/api/.docker/Dockerfile \
 		./api
 
-# Build FRONT image
+# Build FRONT image PROD
 build-front:
 	docker build \
 		-t $(PROJECT_NAME)-front \
-		-f $(PWD)/front/.docker/Dockerfile \
+		-f $(PWD)/front/.docker/prod/Dockerfile \
 		--build-arg FRONT_PORT=$(FRONT_PORT) \
 		--build-arg FRONT_API_HOST=$(FRONT_API_HOST) \
+		./front
+
+# Build FRONT image DEV
+build-front-dev:
+	docker build \
+		-t $(PROJECT_NAME)-front-dev \
+		-f $(PWD)/front/.docker/dev/Dockerfile \
 		./front
 
 # Create network
@@ -84,6 +91,15 @@ run-front:
 		-e FRONT_PORT=$(FRONT_PORT) \
 		-e FRONT_API_HOST=$(FRONT_API_HOST) \
 		$(PROJECT_NAME)-front
+
+# Run FRONT DEV
+run-front-dev:
+	docker run -d \
+		--name $(PROJECT_NAME)-front \
+		--network $(PROJECT_NAME)-network \
+		-e FRONT_PORT=$(FRONT_PORT) \
+		-e FRONT_API_HOST=$(FRONT_API_HOST) \
+		$(PROJECT_NAME)-front-dev
 
 # Build all
 build: build-gateway build-api build-front
