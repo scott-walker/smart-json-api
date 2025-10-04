@@ -12,20 +12,35 @@ services:
     networks:
       - default
 
-  # FRONT
+  # FRONT PROD
+  # front:
+  #   container_name: ${PROJECT_NAME}-front
+  #   build:
+  #     context: ./front
+  #     dockerfile: ./.docker/prod/Dockerfile
+  #     args:
+  #       - FRONT_PORT=${FRONT_PORT}
+  #       - FRONT_API_HOST=${FRONT_API_HOST}
+  #   environment:
+  #     - FRONT_PORT=${FRONT_PORT}
+  #     - FRONT_API_HOST=${FRONT_API_HOST}
+  #   volumes:
+  #     - ./front:/app
+  #   networks:
+  #     - default
+
+  # FRONT DEV
   front:
     container_name: ${PROJECT_NAME}-front
     build:
       context: ./front
-      dockerfile: ./.docker/Dockerfile
-      args:
-        - FRONT_PORT=${FRONT_PORT}
-        - FRONT_API_HOST=${FRONT_API_HOST}
+      dockerfile: ./.docker/dev/Dockerfile
     environment:
       - FRONT_PORT=${FRONT_PORT}
       - FRONT_API_HOST=${FRONT_API_HOST}
     volumes:
       - ./front:/app
+      - ./front/.docker/dev/entrypoint.sh:/entrypoint.sh
     networks:
       - default
 
