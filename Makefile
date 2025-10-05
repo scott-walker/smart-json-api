@@ -80,7 +80,9 @@ run-api:
 	docker run -d \
 		--name $(PROJECT_NAME)-api \
 		--network $(PROJECT_NAME)-network \
-		-e API_PORT=$(API_PORT) \
+		-e PORT=$(API_PORT) \
+		-e CORS_ORIGIN=$(API_CORS_ORIGIN) \
+		-e API_TOKEN=$(API_AUTH_TOKEN) \
 		$(PROJECT_NAME)-api
 
 # Run FRONT
@@ -90,6 +92,7 @@ run-front:
 		--network $(PROJECT_NAME)-network \
 		-e FRONT_PORT=$(FRONT_PORT) \
 		-e FRONT_API_HOST=$(FRONT_API_HOST) \
+		-e FRONT_API_AUTH_TOKEN=$(FRONT_API_AUTH_TOKEN) \
 		$(PROJECT_NAME)-front
 
 # Run FRONT DEV
@@ -99,6 +102,7 @@ run-front-dev:
 		--network $(PROJECT_NAME)-network \
 		-e FRONT_PORT=$(FRONT_PORT) \
 		-e FRONT_API_HOST=$(FRONT_API_HOST) \
+		-e FRONT_API_AUTH_TOKEN=$(FRONT_API_AUTH_TOKEN) \
 		$(PROJECT_NAME)-front-dev
 
 # Build all

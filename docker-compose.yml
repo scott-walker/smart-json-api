@@ -6,7 +6,9 @@ services:
       context: ./api
       dockerfile: ./.docker/Dockerfile
     environment:
-      - API_PORT=${API_PORT}
+      - PORT=${API_PORT}
+      - CORS_ORIGIN=${API_CORS_ORIGIN}
+      - API_TOKEN=${API_AUTH_TOKEN}
     volumes:
       - ./api:/app
     networks:
@@ -38,6 +40,7 @@ services:
     environment:
       - FRONT_PORT=${FRONT_PORT}
       - FRONT_API_HOST=${FRONT_API_HOST}
+      - FRONT_API_AUTH_TOKEN=${FRONT_API_AUTH_TOKEN}
     volumes:
       - ./front:/app
       - ./front/.docker/dev/entrypoint.sh:/entrypoint.sh
