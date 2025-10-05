@@ -1,4 +1,5 @@
 import { NestFactory } from "@nestjs/core"
+import { ConfigService } from "@nestjs/config"
 import { AppModule } from "./app.module"
 import { CorsConfig, ServerConfig } from "@types"
 import { CORS_CONFIG_KEY, SERVER_CONFIG_KEY } from "@config"
@@ -6,8 +7,9 @@ import { CORS_CONFIG_KEY, SERVER_CONFIG_KEY } from "@config"
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  const corsSettings = app.get<CorsConfig>(CORS_CONFIG_KEY)
-  const serverSettings = app.get<ServerConfig>(SERVER_CONFIG_KEY)
+  const configService = app.get(ConfigService)
+  const corsSettings = configService.get<CorsConfig>(CORS_CONFIG_KEY)!
+  const serverSettings = configService.get<ServerConfig>(SERVER_CONFIG_KEY)!
 
   app.enableCors(corsSettings)
 
