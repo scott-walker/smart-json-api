@@ -43,7 +43,7 @@ export class AiService {
    * Правила для запроса
    */
   private rules: string[] = [
-    "- Return only valid JSON",
+    "- Return only valid JSON!",
     "- Return only {limit} items",
     "- Use the following schema: {schema}",
     "- Write in Russian",
@@ -79,8 +79,8 @@ export class AiService {
 
       return JSON.parse(json) as T
     } catch (error) {
-      this.logger.error(`Ошибка при парсинге ответа: ${error}`)
-      this.logger.error(`Ответ: ${JSON.stringify(response, null, 2)}`)
+      this.logger.error(`Ошибка при парсинге ответа`, error)
+      this.logger.error(`Данные ответа`, response)
 
       return null
     }
@@ -100,7 +100,7 @@ export class AiService {
    */
   async createCompletion<T>(params: CreateCompletionParams): Promise<CreateCompletionResponse<T>> {
     this.logger.log(`Запрос к AI: ${params.query}`)
-    this.logger.log(`Схема: ${JSON.stringify(params.schema, null, 2)}`)
+    this.logger.log(`Схема`, params.schema)
 
     try {
       const { model } = this.configService.get<AiConfig>(AI_CONFIG_KEY)!
@@ -113,7 +113,7 @@ export class AiService {
         ],
       })
 
-      this.logger.log(`Ответ от AI: ${JSON.stringify(completion, null, 2)}`)
+      this.logger.log(`Ответ от AI`, completion)
 
       return {
         data: this.parseResponse<T>(completion),
@@ -121,7 +121,7 @@ export class AiService {
     } catch (error) {
       const message = error instanceof Error ? error.message : "Unknown error"
 
-      this.logger.error(`Ошибка при создании запроса к AI: ${message}`)
+      this.logger.error(`Ошибка при создании запроса к AI: ${message}`, error)
 
       throw new ServiceUnavailableException(message)
     }

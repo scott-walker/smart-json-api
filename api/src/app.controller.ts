@@ -1,5 +1,10 @@
-import { Controller, Get, Query } from "@nestjs/common"
+import { Controller, Get, Post, Body } from "@nestjs/common"
 import { AppService } from "./app.service"
+
+interface TestBody {
+  limit: number
+  query: string
+}
 
 @Controller()
 export class AppController {
@@ -10,9 +15,9 @@ export class AppController {
     return { version: "1.0.0", data: [] }
   }
 
-  @Get("test")
-  async getTest(@Query("limit") limit: number = 10): Promise<{ data: unknown }> {
-    const { data } = await this.appService.getTest(limit)
+  @Post("test")
+  async getTest(@Body() body: TestBody): Promise<{ data: unknown }> {
+    const { data } = await this.appService.sendRequest(body)
 
     return { data }
   }

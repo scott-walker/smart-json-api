@@ -1,3 +1,4 @@
+import { WinstonModule } from "nest-winston"
 import { Module } from "@nestjs/common"
 import { APP_GUARD } from "@nestjs/core"
 import { ConfigModule } from "@nestjs/config"
@@ -5,7 +6,7 @@ import { AppController } from "./app.controller"
 import { AppService } from "./app.service"
 import { AiService } from "./ai.service"
 import { AuthGuard } from "./guards/auth.guard"
-import { config } from "@config"
+import { config, loggerConfig } from "@config"
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { config } from "@config"
       isGlobal: true,
       load: config,
     }),
+    WinstonModule.forRoot(loggerConfig),
   ],
   controllers: [AppController],
   providers: [
