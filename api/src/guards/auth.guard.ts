@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common"
 import { ConfigService } from "@nestjs/config"
 import { ServerConfig } from "@types"
-// import { SERVER_CONFIG_KEY } from "@config"
+import { SERVER_CONFIG_KEY } from "@config"
 import { Request } from "express"
 
 @Injectable()
@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest<Request>()
     const apiKeyFromHeader = this.extractTokenFromHeader(request)
-    const serverSettings = this.configService.get<ServerConfig>("server")
+    const serverSettings = this.configService.get<ServerConfig>(SERVER_CONFIG_KEY)
 
     if (!apiKeyFromHeader) {
       throw new UnauthorizedException("API ключ отсутствует")
