@@ -83,6 +83,7 @@ run-api:
 		-e PORT=$(API_PORT) \
 		-e CORS_ORIGIN=$(API_CORS_ORIGIN) \
 		-e API_TOKEN=$(API_AUTH_TOKEN) \
+		-e AI_API_KEY=$(API_AI_KEY) \
 		$(PROJECT_NAME)-api
 
 # Run FRONT

@@ -9,6 +9,7 @@ services:
       - PORT=${API_PORT}
       - CORS_ORIGIN=${API_CORS_ORIGIN}
       - API_TOKEN=${API_AUTH_TOKEN}
+      - AI_API_KEY=${API_AI_KEY}
     volumes:
       - ./api:/app
     networks:
