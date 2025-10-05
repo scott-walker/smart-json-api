@@ -5,8 +5,9 @@ ENV API_PORT=${API_PORT}
 
 WORKDIR /app
 
-COPY . .
-RUN npm ci --omit=dev && npm cache clean --force
+# COPY . .
+# RUN npm i -g @nestjs/cli
+# RUN npm ci --omit=dev && npm cache clean --force
 
 COPY ./.docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
