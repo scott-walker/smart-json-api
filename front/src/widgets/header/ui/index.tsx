@@ -5,8 +5,11 @@
  */
 export const Header = () => {
   return (
-    <div className="px-12 py-6 bg-foreground/10 text-foreground">
-      <h1 className="text-4xl font-bold">SmartJSON API</h1>
+    <div className="px-12 py-6">
+      <h1 className="text-6xl font-display">
+        SmartJSON API
+        {/* <span className="bg-gradient text-background rounded-xl px-4 py-1 font-bold">SmartJSON API</span> */}
+      </h1>
     </div>
   )
 }
