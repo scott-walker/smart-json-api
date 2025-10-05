@@ -24,3 +24,18 @@ export interface CorsConfig extends CorsOptions {
    */
   origin: string[]
 }
+
+/**
+ * Конфигурация AI
+ */
+export interface AiConfig {
+  /**
+   * Модель
+   */
+  model: string
+
+  /**
+   * API ключ
+   */
+  apiKey: string
+}
