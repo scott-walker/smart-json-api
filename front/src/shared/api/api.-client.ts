@@ -13,11 +13,12 @@ interface ApiClientConfig {
 export const createApiClient = (config: ApiClientConfig) => {
   const client = ky.create({
     prefixUrl: config.baseUrl,
-    // headers: {
-    //   Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
-    // },
-    timeout: 5000,
-    retry: 2,
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN ?? ""}`,
+    },
+    // timeout: 5000,
+    // retry: 2,
+    credentials: "include",
   })
 
   return client
