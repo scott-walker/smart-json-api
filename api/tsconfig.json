@@ -22,8 +22,8 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@config": ["./src/config/index.ts"],
-      "@types": ["./src/types/index.ts"]
+      "@config": ["src/config/index"],
+      "@types": ["src/types/index"]
     }
   }
 }

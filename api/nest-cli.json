@@ -3,10 +3,6 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true,
-    "aliases": {
-      "@config/*": "src/config/*",
-      "@types/*": "src/types/*"
-    }
+    "deleteOutDir": true
   }
 }
