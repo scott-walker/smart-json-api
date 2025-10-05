@@ -4,6 +4,10 @@
 :root {
   --color-foreground: #eeedfd;
   --color-background: #070713;
+  --color-background-accent: #1d1d36;
+  /* --color-foreground: #070713;
+  --color-background: #f5f4fb; */
+  /* --color-background-accent: #ffffff; */
   --color-primary: #ffa500;
   --color-secondary: #7c76e4;
   --color-accent: #ff009d;
@@ -19,6 +23,7 @@
 @theme inline {
   --color-foreground: var(--color-foreground);
   --color-background: var(--color-background);
+  --color-background-accent: var(--color-background-accent);
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
   --color-accent: var(--color-accent);
