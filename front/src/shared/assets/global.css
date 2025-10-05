@@ -1,0 +1,58 @@
+/* https://www.realtimecolors.com/?colors=eeedfd-070713-ffa500-7c76e4-ff009d&fonts=Nunito-Inter */
+@import "tailwindcss";
+
+:root {
+  --color-foreground: #eeedfd;
+  --color-background: #070713;
+  --color-primary: #ffa500;
+  --color-secondary: #7c76e4;
+  --color-accent: #ff009d;
+
+  --linear-primary-accent: linear-gradient(120deg, var(--color-primary), var(--color-accent));
+  --radial-primary-accent: radial-gradient(var(--color-primary), var(--color-accent));
+
+  --font-display-sans: "Nunito Sans", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Geist Mono", monospace;
+}
+
+@theme inline {
+  --color-foreground: var(--color-foreground);
+  --color-background: var(--color-background);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-accent: var(--color-accent);
+
+  --linear-primary-accent: var(--linear-primary-accent);
+  --radial-primary-accent: var(--radial-primary-accent);
+
+  --font-display-sans: var(--font-display-sans);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+@utility font-display {
+  font-family: var(--font-display-sans);
+}
+@utility font-sans {
+  font-family: var(--font-sans);
+}
+@utility font-mono {
+  font-family: var(--font-mono);
+}
+
+@utility text-gradient {
+  background: var(--linear-primary-accent);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@utility bg-gradient {
+  background: var(--linear-primary-accent);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
