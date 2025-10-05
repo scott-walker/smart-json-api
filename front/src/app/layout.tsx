@@ -1,16 +1,20 @@
 import type { Metadata } from "next"
-import { Geist, Geist_Mono } from "next/font/google"
+import { Inter, Nunito_Sans, Geist_Mono } from "next/font/google"
 import { Layout } from "@widgets/layout"
 import { Header } from "@widgets/header"
-import "@shared/assets/globals.css"
+import "@shared/assets/global.css"
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const fontDisplaySans = Nunito_Sans({
+  variable: "--font-nunito-sans",
+  subsets: ["cyrillic"],
 })
-const geistMono = Geist_Mono({
+const fontSans = Inter({
+  variable: "--font-inter",
+  subsets: ["cyrillic"],
+})
+const fontMono = Geist_Mono({
   variable: "--font-geist-mono",
-  subsets: ["latin"],
+  subsets: ["cyrillic"],
 })
 
 export const metadata: Metadata = {
@@ -24,8 +28,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html lang="ru">
+      <body className={`${fontDisplaySans.variable} ${fontSans.variable} ${fontMono.variable} antialiased`}>
         <Layout header={<Header />}>{children}</Layout>
       </body>
     </html>
