@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_CONNECTION")
+}
+
+/**
+ * Модель кастомного эндпоинта
+ */
+model Endpoint {
+  id        String   @id @default(uuid())
+  url       String   @unique
+  query     String
+  params    Json
+  schema    Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
