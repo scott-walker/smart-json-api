@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common"
-import { AiService } from "./ai.service"
+import { AiService } from "./common/ai.service"
 
 /**
  * Параметры запроса к AI
