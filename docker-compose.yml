@@ -1,4 +1,21 @@
 services:
+  # DATABASE
+  db:
+    container_name: ${PROJECT_NAME}-database
+    build:
+      context: ./db
+      dockerfile: ./.docker/Dockerfile
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - database_data:/var/lib/postgresql/data
+    networks:
+      - default
+
   # API
   api:
     container_name: ${PROJECT_NAME}-api
@@ -6,10 +23,11 @@ services:
       context: ./api
       dockerfile: ./.docker/Dockerfile
     environment:
-      - PORT=${API_PORT}
-      - CORS_ORIGIN=${API_CORS_ORIGIN}
-      - API_TOKEN=${API_AUTH_TOKEN}
-      - AI_API_KEY=${API_AI_KEY}
+      PORT: ${API_PORT}
+      CORS_ORIGIN: ${API_CORS_ORIGIN}
+      API_TOKEN: ${API_AUTH_TOKEN}
+      AI_API_KEY: ${API_AI_KEY}
+      DB_CONNECTION: ${API_DB_CONNECTION}
     volumes:
       - ./api:/app
     networks:
@@ -22,11 +40,11 @@ services:
   #     context: ./front
   #     dockerfile: ./.docker/prod/Dockerfile
   #     args:
-  #       - FRONT_PORT=${FRONT_PORT}
-  #       - FRONT_API_HOST=${FRONT_API_HOST}
+  #       FRONT_PORT: ${FRONT_PORT}
+  #       FRONT_API_HOST: ${FRONT_API_HOST}
   #   environment:
-  #     - FRONT_PORT=${FRONT_PORT}
-  #     - FRONT_API_HOST=${FRONT_API_HOST}
+  #     FRONT_PORT: ${FRONT_PORT}
+  #     FRONT_API_HOST: ${FRONT_API_HOST}
   #   volumes:
   #     - ./front:/app
   #   networks:
@@ -39,9 +57,9 @@ services:
       context: ./front
       dockerfile: ./.docker/dev/Dockerfile
     environment:
-      - FRONT_PORT=${FRONT_PORT}
-      - FRONT_API_HOST=${FRONT_API_HOST}
-      - FRONT_API_AUTH_TOKEN=${FRONT_API_AUTH_TOKEN}
+      FRONT_PORT: ${FRONT_PORT}
+      FRONT_API_HOST: ${FRONT_API_HOST}
+      FRONT_API_AUTH_TOKEN: ${FRONT_API_AUTH_TOKEN}
     volumes:
       - ./front:/app
       - ./front/.docker/dev/entrypoint.sh:/entrypoint.sh
@@ -61,12 +79,12 @@ services:
       - 80:80
       - 443:443
     environment:
-      - GATEWAY_API_HOST=${GATEWAY_API_HOST}
-      - GATEWAY_API_PORT=${GATEWAY_API_PORT}
-      - GATEWAY_API_SERVER_NAME=${GATEWAY_API_SERVER_NAME}
-      - GATEWAY_FRONT_HOST=${GATEWAY_FRONT_HOST}
-      - GATEWAY_FRONT_PORT=${GATEWAY_FRONT_PORT}
-      - GATEWAY_FRONT_SERVER_NAME=${GATEWAY_FRONT_SERVER_NAME}
+      GATEWAY_API_HOST: ${GATEWAY_API_HOST}
+      GATEWAY_API_PORT: ${GATEWAY_API_PORT}
+      GATEWAY_API_SERVER_NAME: ${GATEWAY_API_SERVER_NAME}
+      GATEWAY_FRONT_HOST: ${GATEWAY_FRONT_HOST}
+      GATEWAY_FRONT_PORT: ${GATEWAY_FRONT_PORT}
+      GATEWAY_FRONT_SERVER_NAME: ${GATEWAY_FRONT_SERVER_NAME}
     volumes:
       - ./gateway/.docker/nginx.conf:/etc/nginx/nginx.conf.template
       - ./gateway/.docker/entrypoint.sh:/entrypoint.sh
@@ -74,6 +92,9 @@ services:
       - ./gateway/logs:/var/log/nginx
     networks:
       - default
+
+volumes:
+  database_data:
 
 networks:
   default:
