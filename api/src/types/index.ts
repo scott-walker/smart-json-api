@@ -39,3 +39,18 @@ export interface AiConfig {
    */
   apiKey: string
 }
+
+/**
+ * Конфигурация DB
+ */
+export interface DbConfig {
+  /**
+   * URL соединения с БД
+   */
+  connectionUrl: string
+
+  /**
+   * Уровни логирования
+   */
+  logLevel: ("query" | "error" | "warn" | "info")[]
+}
