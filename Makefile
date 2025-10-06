@@ -52,6 +52,13 @@ build-front-dev:
 		-f $(PWD)/front/.docker/dev/Dockerfile \
 		./front
 
+# Build DATABASE image
+build-database:
+	docker build \
+		-t $(PROJECT_NAME)-database \
+		-f $(PWD)/db/.docker/Dockerfile \
+		./database
+
 # Create network
 create-network:
 	docker network create $(PROJECT_NAME)-network
@@ -84,7 +91,19 @@ run-api:
 		-e CORS_ORIGIN=$(API_CORS_ORIGIN) \
 		-e API_TOKEN=$(API_AUTH_TOKEN) \
 		-e AI_API_KEY=$(API_AI_KEY) \
+		-e DB_CONNECTION=$(API_DB_CONNECTION) \
 		$(PROJECT_NAME)-api
+
+# Run DATABASE
+run-database:
+	docker run -d \
+		--name $(PROJECT_NAME)-database \
+		--network $(PROJECT_NAME)-network \
+		-p $(DB_PORT):5432 \
+		-e POSTGRES_USER=$(DB_USER) \
+		-e POSTGRES_PASSWORD=$(DB_PASS) \
+		-e POSTGRES_DB=$(DB_NAME) \
+		$(PROJECT_NAME)-database
 
 # Run FRONT
 run-front:
@@ -107,15 +126,15 @@ run-front-dev:
 		$(PROJECT_NAME)-front-dev
 
 # Build all
-build: build-gateway build-api build-front
+build: build-gateway build-database build-api build-front 
 
 # Start all	
-start: create-network run-api run-front run-gateway
+start: create-network run-database run-api run-front run-gateway 
 
 # Stop all
 stop:
-	docker stop $(PROJECT_NAME)-gateway $(PROJECT_NAME)-api $(PROJECT_NAME)-front
-	docker rm $(PROJECT_NAME)-gateway $(PROJECT_NAME)-api $(PROJECT_NAME)-front
+	docker stop $(PROJECT_NAME)-gateway $(PROJECT_NAME)-api $(PROJECT_NAME)-front $(PROJECT_NAME)-database
+	docker rm $(PROJECT_NAME)-gateway $(PROJECT_NAME)-api $(PROJECT_NAME)-front $(PROJECT_NAME)-database
 	docker network rm $(PROJECT_NAME)-network
 
 # Restart all
